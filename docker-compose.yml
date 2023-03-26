@@ -9,7 +9,7 @@ services:
     ports:
       - 3000:3000
     volumes:
-      - "./NG_Frontend:/app"
+      - "./NG_Frontend:/usr/app"
     
     networks:
       - NG_network
