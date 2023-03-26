@@ -18,14 +18,10 @@ app.use(
   express.urlencoded({ limit: "50mb", extended: true, parameterLimit: 50000 })
 );
 
-app.use("/doc", SwaggerUI.serve);
-app.get("/doc", SwaggerUI.setup(YAML.parse(docYaml)));
+app.use("/", SwaggerUI.serve);
+app.get("/", SwaggerUI.setup(YAML.parse(docYaml)));
 
 app.use("/user", userRouter);
-
-app.get("/", (request, response) => {
-  return response.send("Server is running");
-});
 
 app.get("/pdf", (request, response) => {
   return response.sendFile(join(__dirname, "Generated.pdf"));
