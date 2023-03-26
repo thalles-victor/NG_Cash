@@ -12,9 +12,8 @@ Para executar o projeto é necessário ter o docker engine e o docker compose in
 docker compose up --build
 ```
 para rodar o projeto.
-#
 
-## Backend
+[./NG_Backend/.env](./NG_Backend/)
 ```env
 PORT= 3333
 HASH_SALT= 12
@@ -28,6 +27,7 @@ POSTGRES_PASSWORD= mustbestrongapassword
 
 DATABASE_URL= postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@${DATABASE_CONTAINER}:5432/{POSTGRES_DB}?schema=public
 ```
+#
 
 ## Backend 
 O back end foi construído utilizando express junto com várias outras libs com o modelo REST API. Você pode consultar a documentação da api na raiz do domínio da aplicação em http://localhost:33333.
