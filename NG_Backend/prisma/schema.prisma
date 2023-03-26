@@ -4,7 +4,7 @@ generator client {
 
 datasource db {
   provider = "postgresql"
-  url      = "postgresql://userformpostgresdatabase:mustbestrongapassword@ng_database:5432/ngcashdatabase?schema=sample"
+  url      = env("DATABASE_URL")
 }
 
 model User {

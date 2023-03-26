@@ -18,6 +18,8 @@ services:
     
 
   ng_backend:
+    env_file:
+      - "./NG_Backend/.env"
     container_name: ng_backend
     build:
       context: "./NG_Backend"
@@ -28,7 +30,7 @@ services:
       - ng_database
 
     volumes:
-      - "./NG_Backend:/app"
+      - "./NG_Backend:/usr/app"
     networks:
       - NG_network
     command:  bash -c "npm run migrate && npm run dev"
@@ -36,10 +38,12 @@ services:
   ng_database:
     container_name: ng_database
     image: postgres
-    environment:
-      POSTGRES_DB: ngcashdatabase
-      POSTGRES_USER: userformpostgresdatabase
-      POSTGRES_PASSWORD: mustbestrongapassword
+
+    env_file:
+      #You must be especify db, user and password for the database
+      #in .env file into NG_Backend
+      - ./NG_Backend/.env
+
     ports:
       - 5432:5432
     networks:
