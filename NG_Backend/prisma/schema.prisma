@@ -1,0 +1,46 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = "postgresql://userformpostgresdatabase:mustbestrongapassword@ng_database:5432/ngcashdatabase?schema=sample"
+}
+
+model User {
+  id_pk    String @id @default(uuid())
+  name     String
+  userName String @unique
+  password String
+  avatar   String
+
+  Account Account?
+
+  @@map("users")
+}
+
+model Account {
+  id_pk   String @id @default(uuid())
+  balance Int    @default(100)
+
+  user         User           @relation(fields: [userName_fk], references: [userName])
+  userName_fk  String         @unique
+  transactions Transactions[]
+
+  @@map("accounts")
+}
+
+model Transactions {
+  id_pk String @id @default(uuid())
+
+  value Int
+
+  debitedAccountId  String
+  creditedAccountId String
+  Account           Account? @relation(fields: [accountId_pk], references: [id_pk])
+  accountId_pk      String?
+
+  createdAt DateTime @default(now())
+
+  @@map("transactions")
+}

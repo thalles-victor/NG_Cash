@@ -1,0 +1,51 @@
+version: "3"
+
+services:
+  ng_frontend:
+    container_name: ng_frontend
+    build:
+      context: "./NG_Frontend"
+      dockerfile: Dockerfile
+    ports:
+      - 3000:3000
+    volumes:
+      - "./NG_Frontend:/app"
+    
+    networks:
+      - NG_network
+    depends_on:
+      - ng_backend
+    
+
+  ng_backend:
+    container_name: ng_backend
+    build:
+      context: "./NG_Backend"
+      dockerfile: Dockerfile
+    ports:
+      - 3333:3333
+    depends_on:
+      - ng_database
+
+    volumes:
+      - "./NG_Backend:/app"
+    networks:
+      - NG_network
+    command:  bash -c "npm run migrate && npm run dev"
+
+  ng_database:
+    container_name: ng_database
+    image: postgres
+    environment:
+      POSTGRES_DB: ngcashdatabase
+      POSTGRES_USER: userformpostgresdatabase
+      POSTGRES_PASSWORD: mustbestrongapassword
+    ports:
+      - 5432:5432
+    networks:
+      - NG_network
+
+networks:
+  NG_network:
+    driver: bridge
+      
